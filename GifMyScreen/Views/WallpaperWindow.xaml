@@ -1,0 +1,20 @@
+﻿<Window x:Class="GifMyScreen.Views.WallpaperWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        Title="WallpaperHost"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Background="#0F172A"
+        Left="0" Top="0"
+        Width="{x:Static SystemParameters.PrimaryScreenWidth}"
+        Height="{x:Static SystemParameters.PrimaryScreenHeight}">
+    <Grid>
+        <!-- WebView2 Kontrolü: Tam Ekran ve İlk Başta Gizli -->
+        <wv2:WebView2 x:Name="WallpaperWebView"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      Visibility="Hidden"/>
+    </Grid>
+</Window>

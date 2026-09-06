@@ -5,8 +5,85 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GifMyScreen"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Gif My Screen - Kontrol Paneli" 
+        Height="420" Width="520"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="#0F172A">
+    <Grid Margin="24">
+        <StackPanel>
+            <TextBlock Text="Gif My Screen" 
+                       FontSize="26" 
+                       FontWeight="Bold" 
+                       Foreground="#38BDF8"/>
+            <TextBlock Text="Masaüstü duvar kağıdı ve animasyon kontrolü" 
+                       FontSize="13" 
+                       Foreground="#94A3B8" 
+                       Margin="0,4,0,24"/>
 
+            <!-- Yerel GIF/Dosya Seçimi -->
+            <TextBlock Text="Yerel Medya (GIF, Video, Resim)" 
+                       FontWeight="SemiBold" 
+                       Foreground="#E2E8F0" 
+                       Margin="0,0,0,8"/>
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="TxtFilePath" 
+                         Background="#1E293B" 
+                         Foreground="#F8FAFC" 
+                         BorderBrush="#334155" 
+                         Padding="10,8" 
+                         IsReadOnly="True"
+                         FontSize="13"/>
+                <Button Grid.Column="1" 
+                        Content="Dosya Seç..." 
+                        Margin="8,0,0,0" 
+                        Padding="16,8" 
+                        Background="#0284C7" 
+                        Foreground="White" 
+                        FontWeight="SemiBold"
+                        BorderThickness="0"
+                        Click="BtnBrowse_Click"/>
+            </Grid>
+
+            <!-- URL Girişi -->
+            <TextBlock Text="Web Duvar Kağıdı (URL)" 
+                       FontWeight="SemiBold" 
+                       Foreground="#E2E8F0" 
+                       Margin="0,0,0,8"/>
+            <Grid Margin="0,0,0,28">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="TxtUrl" 
+                         Background="#1E293B" 
+                         Foreground="#F8FAFC" 
+                         BorderBrush="#334155" 
+                         Padding="10,8" 
+                         FontSize="13"
+                         Text="https://"/>
+                <Button Grid.Column="1" 
+                        Content="Uygula" 
+                        Margin="8,0,0,0" 
+                        Padding="20,8" 
+                        Background="#0284C7" 
+                        Foreground="White" 
+                        FontWeight="SemiBold"
+                        BorderThickness="0"
+                        Click="BtnApplyUrl_Click"/>
+            </Grid>
+
+            <!-- Alt Kısım Bildirimi -->
+            <Border Background="#1E293B" CornerRadius="6" Padding="12">
+                <TextBlock Text="💡 Pencereyi kapattığınızda uygulama arka planda (Sistem Tepsisinde) çalışmaya devam eder." 
+                           Foreground="#94A3B8" 
+                           FontSize="12" 
+                           TextWrapping="Wrap"/>
+            </Border>
+        </StackPanel>
     </Grid>
 </Window>
