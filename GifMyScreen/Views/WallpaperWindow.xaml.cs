@@ -65,6 +65,14 @@ namespace GifMyScreen.Views
                     catch (COMException) { }
                     catch (InvalidOperationException) { }
                 };
+
+                // Varsa son seçilen duvar kağıdını yükle
+                ConfigManager.Load();
+                if (!string.IsNullOrEmpty(ConfigManager.Current.LastWallpaperPath) &&
+                    (File.Exists(ConfigManager.Current.LastWallpaperPath) || Uri.IsWellFormedUriString(ConfigManager.Current.LastWallpaperPath, UriKind.Absolute)))
+                {
+                    SetWallpaper(ConfigManager.Current.LastWallpaperPath);
+                }
             }
             catch (Exception ex)
             {
@@ -175,6 +183,10 @@ namespace GifMyScreen.Views
             {
                 WallpaperWebView.Source = validUri;
             }
+
+            // SetWallpaper metodunun en altına ekleyin:
+            ConfigManager.Current.LastWallpaperPath = sourcePathOrUrl;
+            ConfigManager.Save(); 
         }
 
         private void WallpaperWindow_Closed(object? sender, EventArgs e)

@@ -77,6 +77,14 @@
                         Click="BtnApplyUrl_Click"/>
             </Grid>
 
+            <!-- Alt Kısım Bildiriminin hemen üzerine ekleyin: -->
+            <CheckBox x:Name="ChkAutoStart" 
+          Content="Windows başladığında otomatik çalıştır" 
+          Foreground="#E2E8F0" 
+          FontSize="13" 
+          Margin="0,0,0,20"
+          Click="ChkAutoStart_Click"/>
+
             <!-- Alt Kısım Bildirimi -->
             <Border Background="#1E293B" CornerRadius="6" Padding="12">
                 <TextBlock Text="💡 Pencereyi kapattığınızda uygulama arka planda (Sistem Tepsisinde) çalışmaya devam eder." 

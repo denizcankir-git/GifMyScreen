@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
-using Microsoft.Win32;
+using GifMyScreen.Core;
 
 namespace GifMyScreen
 {
@@ -9,6 +9,14 @@ namespace GifMyScreen
         public MainWindow()
         {
             InitializeComponent();
+            LoadCurrentSettings();
+        }
+
+        private void LoadCurrentSettings()
+        {
+            ConfigManager.Load();
+            TxtFilePath.Text = ConfigManager.Current.LastWallpaperPath;
+            ChkAutoStart.IsChecked = ConfigManager.Current.RunAtStartup;
         }
 
         private void BtnBrowse_Click(object sender, RoutedEventArgs e)
@@ -38,7 +46,12 @@ namespace GifMyScreen
             }
         }
 
-        // Pencere [X] ile kapatıldığında uygulamayı kapatma, sadece gizle (Tray'de kalsın)
+        private void ChkAutoStart_Click(object sender, RoutedEventArgs e)
+        {
+            bool isChecked = ChkAutoStart.IsChecked ?? false;
+            ConfigManager.SetStartup(isChecked);
+        }
+
         protected override void OnClosing(CancelEventArgs e)
         {
             e.Cancel = true;
