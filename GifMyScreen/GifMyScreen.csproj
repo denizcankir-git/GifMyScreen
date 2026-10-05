@@ -8,6 +8,11 @@
     <UseWPF>true</UseWPF>
 	<!-- Sistem Tepsisi (NotifyIcon) için gerekli: -->
 	<UseWindowsForms>true</UseWindowsForms>
+	<!-- 24H2+ masaüstü enjeksiyonu için gereken supportedOS bildirimi: -->
+	<ApplicationManifest>app.manifest</ApplicationManifest>
+	<!-- WFO0003: WinForms analizcisi DPI ayarını manifest yerine Application.SetHighDpiMode ile önerir; bu bir WPF uygulamasıdır,
+	     WinForms yalnızca NotifyIcon için kullanılır. WPF'te Per-Monitor V2 için belgelenmiş yöntem manifesttir. -->
+	<NoWarn>$(NoWarn);WFO0003</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

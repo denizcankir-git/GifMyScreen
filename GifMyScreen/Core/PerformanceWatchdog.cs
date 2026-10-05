@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Threading;
 using GifMyScreen.Core.Native;
 
@@ -33,30 +32,42 @@ namespace GifMyScreen.Core
         {
             IntPtr foregroundHandle = Win32.GetForegroundWindow();
 
-            // Eğer ön planda masaüstünün kendisi varsa duraklatma yapma
-            if (foregroundHandle == IntPtr.Zero ||
-                foregroundHandle == _desktopWindow ||
-                foregroundHandle == _shellWindow)
+            // Ön planda masaüstünün kendisi varsa duraklatma yapma
+            if (foregroundHandle == IntPtr.Zero || IsDesktopWindow(foregroundHandle))
             {
                 UpdateState(false);
                 return;
             }
 
-            if (Win32.GetWindowRect(foregroundHandle, out Win32.RECT rect))
-            {
-                int screenWidth = (int)SystemParameters.PrimaryScreenWidth;
-                int screenHeight = (int)SystemParameters.PrimaryScreenHeight;
+            UpdateState(CoversPrimaryMonitor(foregroundHandle));
+        }
 
-                int windowWidth = rect.Right - rect.Left;
-                int windowHeight = rect.Bottom - rect.Top;
+        private bool IsDesktopWindow(IntPtr hwnd)
+        {
+            if (hwnd == _desktopWindow || hwnd == _shellWindow) return true;
 
-                // Ön plandaki pencere ana ekranı tamamen veya daha fazla kaplıyor mu?
-                bool isFullscreen = (rect.Left <= 0 && rect.Top <= 0 &&
-                                     windowWidth >= screenWidth &&
-                                     windowHeight >= screenHeight);
+            // Klasik düzende masaüstüne tıklanınca ön plana simgeleri barındıran WorkerW gelir
+            string className = Win32.GetClassName(hwnd);
+            return className is "Progman" or "WorkerW";
+        }
 
-                UpdateState(isFullscreen);
-            }
+        /// <summary>
+        /// Pencere, duvar kağıdının bulunduğu ana monitörü tamamen kaplıyor mu?
+        /// Pencere ve monitör sınırları aynı API ailesinden alındığı için DPI ölçeklemesinden bağımsızdır.
+        /// </summary>
+        private static bool CoversPrimaryMonitor(IntPtr hwnd)
+        {
+            if (!Win32.GetWindowRect(hwnd, out Win32.RECT rect)) return false;
+
+            IntPtr monitor = Win32.MonitorFromWindow(hwnd, Win32.MONITOR_DEFAULTTONULL);
+            if (!Win32.TryGetMonitorInfo(monitor, out Win32.MONITORINFO info)) return false;
+            if ((info.dwFlags & Win32.MONITORINFOF_PRIMARY) == 0) return false;
+
+            Win32.RECT bounds = info.rcMonitor;
+            return rect.Left <= bounds.Left &&
+                   rect.Top <= bounds.Top &&
+                   rect.Right >= bounds.Right &&
+                   rect.Bottom >= bounds.Bottom;
         }
 
         private void UpdateState(bool shouldPause)

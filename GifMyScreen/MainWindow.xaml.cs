@@ -14,7 +14,6 @@ namespace GifMyScreen
 
         private void LoadCurrentSettings()
         {
-            ConfigManager.Load();
             TxtFilePath.Text = ConfigManager.Current.LastWallpaperPath;
             ChkAutoStart.IsChecked = ConfigManager.Current.RunAtStartup;
         }

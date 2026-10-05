@@ -11,10 +11,11 @@
         Width="{x:Static SystemParameters.PrimaryScreenWidth}"
         Height="{x:Static SystemParameters.PrimaryScreenHeight}">
     <Grid>
-        <!-- WebView2 Kontrolü: Tam Ekran ve İlk Başta Gizli -->
+        <!-- WebView2 Kontrolü: Tam Ekran.
+             Visibility="Hidden" ile başlatılmamalıdır: gizli başlatılan WebView2'nin kapsayıcı penceresi
+             (Chrome_WidgetWin_0) 0x0 boyutunda kalır ve içerik hiç görünmez. -->
         <wv2:WebView2 x:Name="WallpaperWebView"
                       HorizontalAlignment="Stretch"
-                      VerticalAlignment="Stretch"
-                      Visibility="Hidden"/>
+                      VerticalAlignment="Stretch"/>
     </Grid>
 </Window>

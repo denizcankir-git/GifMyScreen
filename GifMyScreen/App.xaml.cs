@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
+using GifMyScreen.Core;
 using GifMyScreen.Views;
 using Application = System.Windows.Application;
 
@@ -17,6 +18,9 @@ namespace GifMyScreen
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            // Ayarlar tek noktadan yüklenir; pencereler ConfigManager.Current üzerinden okur
+            ConfigManager.Load();
 
             // 1. Masaüstü katmanını arka planda başlat
             WallpaperHost = new WallpaperWindow();
